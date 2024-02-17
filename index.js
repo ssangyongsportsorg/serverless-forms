@@ -65,12 +65,11 @@ function processFormFieldsIndividual(req, res) {
     });
 
     form.on('end', function () {
-        res.writeHead(200, {
-            'content-type': 'text/html'
+        res.writeHead(302, {
+            'Location': 'https://ssangyongsports.eu.org/thanks' // 跳轉網址
         });
-        sendMail(util.inspect(fields));
-        res.write(process.env.MESSAGE || 'Thank you for your submission.');
         res.end();
+        sendMail(util.inspect(fields));
     });
     form.parse(req);
 }
@@ -106,4 +105,3 @@ function sendMail(text) {
       console.log('Message %s sent: %s', info.messageId, info.response);
   });
 }
-

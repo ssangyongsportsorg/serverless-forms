@@ -62,9 +62,9 @@ let transporter = nodemailer.createTransport({
 function sendMail(text, replyTo) {
     let mailOptions = {
         from: process.env.FROM || 'Email form data bot <no-reply@no-email.com>',
-        to: process.env.TO,
+        to: [process.env.TO, process.env.TO2],
         replyTo: replyTo,
-        subject: 'New form submission' + (process.env.SITE_NAME ? ' on ' + process.env.SITE_NAME : ''),
+        subject: '客戶聯繫內容' + (process.env.SITE_NAME ? ' on ' + process.env.SITE_NAME : ''),
         text: text
     };
     console.log('sending email:', mailOptions);

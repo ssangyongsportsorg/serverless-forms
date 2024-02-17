@@ -53,9 +53,6 @@ function processAllFieldsOfTheForm(req, res) {
 }
 
 function processFormFieldsIndividual(req, res) {
-    //Store the data from the fields in your data store.
-    //The data store could be a file or database or any other store based
-    //on your application.
     var fields = [];
     var form = new formidable.IncomingForm();
     form.on('field', function (field, value) {
@@ -66,42 +63,38 @@ function processFormFieldsIndividual(req, res) {
 
     form.on('end', function () {
         res.writeHead(302, {
-            'Location': 'https://ssangyongsports.eu.org/thanks' // 跳轉網址
+            'Location': 'https://ssangyongsports.eu.org/thanks'
         });
         res.end();
-        sendMail(util.inspect(fields));
+        sendMail(util.inspect(fields), fields['email']);
     });
     form.parse(req);
 }
 
-// setup the email sender
-// uses the nodemailer lib
-// sends the email to the adress found in the `TO` env var
 let transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
     port: process.env.EMAIL_PORT,
-    secure: process.env.EMAIL_PORT === 465, // secure:true for port 465, secure:false for port 587
+    secure: process.env.EMAIL_PORT === 465,
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
     }
 });
 
-function sendMail(text) {
-  // setup email data with unicode symbols
-  let mailOptions = {
-      from: process.env.FROM || 'Email form data bot <no-reply@no-email.com>',
-      to: process.env.TO,
-      subject: 'New form submission' + (process.env.SITE_NAME ? ' on ' + process.env.SITE_NAME : ''),
-      text: text
-  };
-  console.log('sending email: ', mailOptions);
+function sendMail(text, replyTo) {
+    let mailOptions = {
+        from: process.env.FROM || 'Email form data bot <no-reply@no-email.com>',
+        to: process.env.TO,
+        replyTo: replyTo,
+        subject: 'New form submission' + (process.env.SITE_NAME ? ' on ' + process.env.SITE_NAME : ''),
+        text: text
+    };
+    console.log('sending email: ', mailOptions);
   
-  // send mail with defined transport object
-  transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-          return console.log(error);
-      }
-      console.log('Message %s sent: %s', info.messageId, info.response);
-  });
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return console.log(error);
+        }
+        console.log('Message %s sent: %s', info.messageId, info.response);
+    });
 }

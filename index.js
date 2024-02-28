@@ -40,6 +40,7 @@ function processFormFieldsIndividual(req, res) {
             console.error(err);
         } else {
             var replyTo = fields['Email'];
+            var Subject = fields['Subject'];
             sendMail(util.inspect(fields), replyTo);
         }
         res.writeHead(302, {
@@ -64,7 +65,7 @@ function sendMail(text, replyTo) {
         from: process.env.FROM || 'Email form data bot <no-reply@no-email.com>',
         to: [process.env.TO, process.env.TO2],
         replyTo: replyTo,
-        subject: '客戶聯繫內容' + (process.env.SITE_NAME ? ' on ' + process.env.SITE_NAME : ''),
+        subject: Subject,
         text: text
     };
     console.log('sending email:', mailOptions);

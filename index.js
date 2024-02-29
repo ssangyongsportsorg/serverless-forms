@@ -40,8 +40,8 @@ function processFormFieldsIndividual(req, res) {
             console.error(err);
         } else {
             var replyTo = fields['Email'];
-       
-            sendMail(util.inspect(fields), replyTo);
+            var subject = fields['Subject'];
+            sendMail(util.inspect(fields), replyTo, subject);
         }
         res.writeHead(302, {
             'Location': 'https://ssangyongsports.eu.org/thanks'
@@ -60,12 +60,12 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-function sendMail(text, replyTo) {
+function sendMail(text, replyTo, subject) {
     let mailOptions = {
         from: process.env.FROM || 'Email form data bot <no-reply@no-email.com>',
         to: [process.env.TO, process.env.TO2],
         replyTo: replyTo,
-        subject: 客戶聯繫內容,
+        subject: subject,
         text: text
     };
     console.log('sending email:', mailOptions);

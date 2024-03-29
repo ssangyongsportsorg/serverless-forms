@@ -54,7 +54,7 @@ function processFormFieldsIndividual(req, res) {
     res.writeHead(403, {
       'Content-Type': 'text/plain'
     });
-    res.write('只能使用官網提交表單，謝謝你');
+    res.write('You can only use ssangyongsports.eu.org/contact to contact us; you cannot use other websites.');
     res.end();
   }
 }

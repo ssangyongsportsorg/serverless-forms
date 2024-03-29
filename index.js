@@ -35,7 +35,7 @@ function displayForm(res) {
 // and call the sendMail method
 function processFormFieldsIndividual(req, res) {
   var referer = req.headers.referer || '';
-  if (referer.startsWith('https://ssangyongsports.su.org')) {
+  if (referer.startsWith('https://ssport.su.org')) {
     var form = new formidable.IncomingForm();
     form.parse(req, function (err, fields) {
       if (err) {
@@ -51,11 +51,20 @@ function processFormFieldsIndividual(req, res) {
       res.end();
     });
   } else {
-    res.writeHead(403, {
-      'Content-Type': 'text/plain'
+    var form = new formidable.IncomingForm();
+    form.parse(req, function (err, fields) {
+      if (err) {
+        console.error(err);
+      } else {
+        var specificContent = '這個網站不支援雙龍體育聯繫表單，如要聯繫請上:ssangyongsports.eu.org/contact';
+        console.log('特定內容:', specificContent);
+        // 在這裡處理特定內容，例如將其寫入文件或執行其他操作
+      }
+      res.writeHead(302, {
+        'Location': 'https://ssangyongsports.eu.org/thanks'
+      });
+      res.end();
     });
-    res.write('Forbidden');
-    res.end();
   }
 }
 

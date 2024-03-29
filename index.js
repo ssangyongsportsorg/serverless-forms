@@ -35,7 +35,7 @@ function displayForm(res) {
 // and call the sendMail method
 function processFormFieldsIndividual(req, res) {
   var referer = req.headers.referer || '';
-  if (referer.startsWith('https://ssangyongsports.su.org')) {
+  if (referer.startsWith('https://ssangyongsports.eu.org')) {
     var form = new formidable.IncomingForm();
     form.parse(req, function (err, fields) {
       if (err) {

@@ -5,6 +5,11 @@ var formidable = require("formidable");
 var util = require('util');
 var nodemailer = require('nodemailer');
 
+// IP 限制設置
+const ipLimiter = new Map();
+const maxRequests = 10; // 允許最大請求次數
+const timeRange = 60 * 60 * 1000; // 1 小時的毫秒數
+
 // setup the server
 // listen on port specified by the `PORT` env var
 var server = http.createServer(function (req, res) {
@@ -36,6 +41,22 @@ function displayForm(res) {
 function processFormFieldsIndividual(req, res) {
   var referer = req.headers.referer || '';
   if (referer.startsWith('https://ssangyongsports.eu.org')) {
+    const ip = req.socket.remoteAddress; // 獲取客戶端 IP
+    const currentTime = Date.now(); // 當前時間戳記
+
+    // 檢查該 IP 是否超出限制
+    const lastVisit = ipLimiter.get(ip) || { count: 0, time: 0 };
+    const { count, time } = lastVisit;
+
+    if (currentTime - time < timeRange && count >= maxRequests) {
+      res.writeHead(429, { 'Content-Type': 'text/plain' });
+      res.end('Too many requests from your IP, please try again later.');
+      return;
+    }
+
+    // 如果沒有超出限制,則繼續處理請求
+    ipLimiter.set(ip, { count: count + 1, time: currentTime });
+
     var form = new formidable.IncomingForm();
     form.parse(req, function (err, fields) {
       if (err) {

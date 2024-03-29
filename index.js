@@ -54,7 +54,7 @@ function processFormFieldsIndividual(req, res) {
     res.writeHead(403, {
       'Content-Type': 'text/plain'
     });
-    res.write('Forbidden');
+    res.write('只能使用官網提交表單，謝謝你');
     res.end();
   }
 }

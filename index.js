@@ -7,7 +7,7 @@ var nodemailer = require('nodemailer');
 
 // IP 限制設置
 const ipLimiter = new Map();
-const maxRequests = 10; // 允許最大請求次數
+const maxRequests = 3; // 允許最大請求次數
 const timeRange = 60 * 60 * 1000; // 1 小時的毫秒數
 
 // setup the server
@@ -50,21 +50,25 @@ function processFormFieldsIndividual(req, res) {
 
     if (currentTime - time < timeRange && count >= maxRequests) {
       res.writeHead(429, { 'Content-Type': 'text/plain' });
-      res.end('Too many requests from your IP, please try again later.');
+      res.end('The Ssangyong sports team only agreed to three contacts, one hour each, on one IP.');
       return;
     }
-
-    // 如果沒有超出限制,則繼續處理請求
-    ipLimiter.set(ip, { count: count + 1, time: currentTime });
 
     var form = new formidable.IncomingForm();
     form.parse(req, function (err, fields) {
       if (err) {
         console.error(err);
       } else {
+        // 檢查 honeypot 欄位是否被填寫
+        if (fields.honeypot) {
+          res.writeHead(403, { 'Content-Type': 'text/plain' });
+          res.end('Detected as a bot, request rejected.');
+          return;
+        }
+
         var replyTo = fields['Email'];
         var subject = fields['Subject'];
-        sendMail(util.inspect(fields), replyTo, subject);
+        sendMail(util.inspect(fields), replyTo, subject, ip);
       }
       res.writeHead(302, {
         'Location': 'https://ssangyongsports.eu.org/thanks'
@@ -90,13 +94,13 @@ let transporter = nodemailer.createTransport({
   }
 });
 
-function sendMail(text, replyTo, subject) {
+function sendMail(text, replyTo, subject, ip) {
   let mailOptions = {
     from: process.env.FROM || 'Email form data bot <no-reply@no-email.com>',
     to: [process.env.TO, process.env.TO2],
     replyTo: replyTo,
     subject: subject,
-    text: text
+    text: `${text}\n\nClient IP: ${ip}`
   };
   console.log('sending email:', mailOptions);
 

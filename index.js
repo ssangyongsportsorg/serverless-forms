@@ -44,7 +44,7 @@ function processFormFieldsIndividual(req, res) {
                 if (fields['honeypot']) {
                     console.log('Spam detected!');
                     res.writeHead(403, { 'Content-Type': 'text/plain' });
-                    res.end('Sorry, your submission was detected as spam.');
+                    res.end('Ha ha, we caught you! Please stop sending this spam contact.');
                     return;
                 }
 

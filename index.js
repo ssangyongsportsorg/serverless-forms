@@ -6,13 +6,10 @@ const formidable = require("formidable");
 const util = require('util');
 const nodemailer = require('nodemailer');
 
-// 建立黑名單
-const blacklist = [
-  'Hello i am writing about the price',
-  'Aloha, wrote about your prices'
-];
+// 黑名单词汇
+const blacklist = ['Hello', 'Aloha', 'the price', 'your prices'];
 
-// 建立 HTTP 伺服器
+// 设置服务器
 const server = http.createServer(function (req, res) {
   if (req.method.toLowerCase() === 'get') {
     displayForm(res);
@@ -25,7 +22,7 @@ const port = process.env.PORT || 8080;
 server.listen(port);
 console.log("server listening on ", port);
 
-// 顯示表單頁面
+// 提供 HTML 文件
 function displayForm(res) {
   fs.readFile(process.env.FORM || 'form.html', function (err, data) {
     res.writeHead(200, {
@@ -37,10 +34,10 @@ function displayForm(res) {
   });
 }
 
-// 處理 POST 請求的表單資料
+// 处理表单字段并调用 sendMail 方法
 function processFormFieldsIndividual(req, res) {
   const referer = req.headers.referer || '';
-  const clientIP = req.socket.remoteAddress;
+  const clientIP = req.socket.remoteAddress; // 获取客户端 IP 地址
 
   if (referer.startsWith('https://ssangyongsports.eu.org')) {
     const form = new formidable.IncomingForm();
@@ -48,16 +45,18 @@ function processFormFieldsIndividual(req, res) {
       if (err) {
         console.error(err);
       } else {
-        if (isBlacklisted(fields['Message'])) {
-          console.log('Blacklisted content detected!');
+        // 检查是否有黑名单词汇
+        const isSpam = blacklist.some(word => fields['Message'].includes(word));
+        if (isSpam) {
+          console.log('Spam detected!');
           res.writeHead(403, { 'Content-Type': 'text/plain' });
-          res.end('Sorry, your message contains blacklisted content.');
+          res.end('Ha ha, we caught you! Please stop sending this spam contact.');
           return;
         }
 
         const replyTo = fields['Email'];
         const subject = fields['Subject'];
-        sendMail(util.inspect(fields), replyTo, subject, clientIP);
+        sendMail(util.inspect(fields), replyTo, subject, clientIP); // 传递客户端 IP 地址
       }
 
       res.writeHead(302, {
@@ -74,17 +73,6 @@ function processFormFieldsIndividual(req, res) {
   }
 }
 
-// 檢查是否在黑名單中
-function isBlacklisted(text) {
-  for (let i = 0; i < blacklist.length; i++) {
-    if (text.includes(blacklist[i])) {
-      return true;
-    }
-  }
-  return false;
-}
-
-// 建立 Nodemailer 連接
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,
   port: process.env.EMAIL_PORT,
@@ -95,14 +83,13 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-// 發送郵件
 function sendMail(text, replyTo, subject, clientIP) {
   const mailOptions = {
     from: process.env.FROM || 'Email form data bot <no-reply@no-email.com>',
     to: [process.env.TO, process.env.TO2],
     replyTo: replyTo,
     subject: subject,
-    text: `${text}\n\nClient IP: ${clientIP}`
+    text: `${text}\n\nClient IP: ${clientIP}` // 在邮件正文中显示客户端 IP 地址
   };
 
   console.log('sending email:', mailOptions);

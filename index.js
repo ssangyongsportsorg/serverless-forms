@@ -12,7 +12,7 @@ const spamKeywords = [
   'Aloha,   write about your the price', 
   'Hi, i write about   the price for reseller',
   '幹你娘',
-  'adult',
+  'Hello  i wrote about your   price for reseller',
   'xxx',
   // 在這裡添加更多您想要過濾的關鍵字
 ];

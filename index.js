@@ -10,7 +10,7 @@ const nodemailer = require('nodemailer');
 const spamKeywords = [
   'Hi, i writing about your   price',
   'Aloha,   write about your the price', 
-  '賭博',
+  'Hi, i write about   the price for reseller',
   '幹你娘',
   'adult',
   'xxx',

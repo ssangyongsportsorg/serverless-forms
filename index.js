@@ -14,11 +14,14 @@ const spamKeywords = [
   '幹你娘',
   'Hello  i wrote about your   price for reseller',
   'xxx',
-  // 在這裡添加更多您想要過濾的關鍵字
 ];
+
+// 定義一個包含需要過濾選項的陣列
+const blockedOptions = ['？']; 
 
 // 使用正則表達式建立黑名單模式
 const spamRegex = new RegExp(spamKeywords.join('|'), 'i');
+const optionsRegex = new RegExp(blockedOptions.join('|'), 'i');
 
 // setup the server
 const server = http.createServer(function (req, res) {
@@ -65,10 +68,10 @@ function processFormFieldsIndividual(req, res) {
         }
 
         // 檢查主旨和內容是否包含垃圾關鍵字
-        if (spamRegex.test(fields['Subject']) || spamRegex.test(fields['Message'])) {
-          console.log('Spam content detected!');
+        if (spamRegex.test(fields['Subject']) || spamRegex.test(fields['Message']) || optionsRegex.test(fields['_email.from'])) {
+          console.log('Spam or blocked option detected!');
           res.writeHead(403, { 'Content-Type': 'text/plain' });
-          res.end('Sorry, your message appears to contain spam content and has been blocked.');
+          res.end('Sorry, your message appears to contain spam content or a blocked option and has been blocked.');
           return;
         }
 

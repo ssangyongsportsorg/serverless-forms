@@ -13,7 +13,8 @@ const spamKeywords = [
   'Hi, i write about   the price for reseller',
   '幹你娘',
   'Hello  i wrote about your   price for reseller',
-  'xxx',
+  'prices',
+  'price',
 ];
 
 // 定義一個包含需要過濾選項的陣列

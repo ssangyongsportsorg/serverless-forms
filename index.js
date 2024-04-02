@@ -8,10 +8,10 @@ const nodemailer = require('nodemailer');
 
 // 定義一個包含垃圾關鍵字的陣列
 const spamKeywords = [
-  'price',
-  'pirces', 
+  'Hi, i writing about your   price',
+  'Aloha,   write about your the price', 
   '賭博',
-  'casino',
+  '幹你娘',
   'adult',
   'xxx',
   // 在這裡添加更多您想要過濾的關鍵字

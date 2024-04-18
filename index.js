@@ -72,7 +72,7 @@ function processFormFieldsIndividual(req, res) {
         if (spamRegex.test(fields['Subject']) || spamRegex.test(fields['Message']) || optionsRegex.test(fields['_email.from'])) {
           console.log('Spam or blocked option detected!');
           res.writeHead(403, { 'Content-Type': 'text/plain' });
-          res.end('Sorry, your message appears to contain spam content or a blocked option and has been blocked.');
+          res.end('Sorry, your message appears to contain spam content or a blocked option and has been blocked.More information:https://discuss.ssangyongsports.eu.org/d/16-lian-xi-biao-dan-feng-jin-de-wen-zi');
           return;
         }
 

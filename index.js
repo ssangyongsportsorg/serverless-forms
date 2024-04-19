@@ -71,8 +71,10 @@ function processFormFieldsIndividual(req, res) {
         // 檢查主旨和內容是否包含垃圾關鍵字
         if (spamRegex.test(fields['Subject']) || spamRegex.test(fields['Message']) || optionsRegex.test(fields['_email.from'])) {
           console.log('Spam or blocked option detected!');
-          res.writeHead(403, { 'Content-Type': 'text/plain' });
-          res.end('Sorry, your message appears to contain spam content or a blocked option and has been blocked.More information:https://discuss.ssangyongsports.eu.org/d/16-lian-xi-biao-dan-feng-jin-de-wen-zi');
+        res.writeHead(403, {
+  'Content-Type': 'text/plain; charset=utf-8'
+});
+res.end('抱歉，您的消息似乎包含垃圾郵件內容或已被封鎖的選項，因此已被封鎖。更多信息：https://discuss.ssangyongsports.eu.org/d/16-lian-xi-biao-dan-feng-jin-de-wen-zi');
           return;
         }
 

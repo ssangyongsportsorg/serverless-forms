@@ -63,7 +63,7 @@ function processFormFieldsIndividual(req, res) {
         // 檢查蜜罐欄位
         if (fields['honeypot']) {
           console.log('Spam detected!');
-          res.writeHead(403, { 'Content-Type': 'text/plain' });
+          res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
           res.end('Ha ha, we caught you! Please stop sending this spam contact.');
           return;
         }
@@ -71,8 +71,8 @@ function processFormFieldsIndividual(req, res) {
         // 檢查主旨和內容是否包含垃圾關鍵字
         if (spamRegex.test(fields['Subject']) || spamRegex.test(fields['Message']) || optionsRegex.test(fields['_email.from'])) {
           console.log('Spam or blocked option detected!');
-          res.writeHead(403, { 'Content-Type': 'text/plain' });
-          res.end('Sorry, your message appears to contain spam content or a blocked option and has been blocked.More information:https://discuss.ssangyongsports.eu.org/d/16-lian-xi-biao-dan-feng-jin-de-wen-zi');
+          res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
+          res.end('抱歉,您的訊息似乎包含垃圾內容或被阻擋的選項,因此已被阻擋。更多資訊:https://discuss.ssangyongsports.eu.org/d/16-lian-xi-biao-dan-feng-jin-de-wen-zi');
           return;
         }
 
@@ -88,9 +88,9 @@ function processFormFieldsIndividual(req, res) {
     });
   } else {
     res.writeHead(403, {
-      'Content-Type': 'text/plain'
+      'Content-Type': 'text/plain; charset=utf-8'
     });
-    res.write('You can only use ssangyongsports.eu.org/contact to contact us; you cannot use other websites.');
+    res.write(Buffer.from('您只能使用 ssangyongsports.eu.org/contact 與我們聯繫,不能使用其他網站。', 'utf-8'));
     res.end();
   }
 }

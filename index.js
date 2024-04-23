@@ -69,7 +69,7 @@ function processFormFieldsIndividual(req, res) {
         }
 
         // 檢查主旨和內容是否包含垃圾關鍵字
-        if (spamRegex.test(fields['Subject']) || spamRegex.test(fields['Message']) || optionsRegex.test(fields['_email.from'])) {
+        if (spamRegex.test(fields['Subject']) || spamRegex.test(fields['message']) || optionsRegex.test(fields['_email.from'])) {
           console.log('Spam or blocked option detected!');
         res.writeHead(403, {
   'Content-Type': 'text/plain; charset=utf-8'

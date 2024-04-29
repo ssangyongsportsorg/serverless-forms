@@ -74,7 +74,7 @@ function processFormFieldsIndividual(req, res) {
         res.writeHead(403, {
   'Content-Type': 'text/plain; charset=utf-8'
 });
-res.end('抱歉，您的消息似乎包含垃圾郵件內容或已被封鎖的選項，因此已被封鎖。更多信息：https://discuss.ssangyongsports.eu.org/d/16-lian-xi-biao-dan-feng-jin-de-wen-zi');
+res.end('抱歉，您的消息似乎包含垃圾郵件內容或已被封鎖的選項，因此已被封鎖。更多信息：https://ssangyongsports.eu.org/blog/ban');
           return;
         }
 

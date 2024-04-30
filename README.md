@@ -1,9 +1,5 @@
 在這個改進版中，我們對原始[專案](https://github.com/lexoyo/serverless-forms/)進行了一些增強功能的添加，使其更加靈活和功能強大。
-## 如何部署
-可使用koyeb和render進行免費部署
-只需註冊分叉此代碼進行，修改就可行啦！
-## 部分變數需自行修改
-我們有些變數，你需在form.html和index.js中修改
+
 ## 新增功能
 
 1. **提交後跳轉至自定義頁面：** 在原專案的基礎上，我們增加了一個功能，允許使用者在提交表單後將頁面重新導向到他們自己定義的網站頁面。這個功能為使用者提供了更多的定制化選項，使他們能夠根據自己的需求，將表單提交後的流程引導至特定的頁面，例如感謝頁面或訂單確認頁面等。（自行使用須在index.js修改連接噢！）
@@ -25,8 +21,7 @@
 7. **來源網站檢查**
    - 檢查表單提交的來源網站，只允許 `https://ssangyongsports.eu.org/contact` 提交表單
 
-## 回報錯誤
-聯繫：dev@ssangyongsports.eu.org或在issues中提交問題
+
 ## 配置 [從專案複製](https://github.com/lexoyo/serverless-forms/)
 
 我們新增的功能你需要在index.js，這是你可以透過部署平台提交的變數
@@ -43,6 +38,7 @@
 | EMAIL_PORT | SMTP配置：[在此處查看這些選項](https://nodemailer.com/smtp/) |
 | EMAIL_USER | SMTP配置：[在此處查看這些選項](https://nodemailer.com/smtp/) |
 | EMAIL_PASS | SMTP配置：[在此處查看這些選項](https://nodemailer.com/smtp/) |
-
+## 回報錯誤
+聯繫：dev@ssangyongsports.eu.org或在issues中提交問題
 通過這些新增的功能，我們希望能夠為使用者提供一個更加全面和強大的無伺服器表單解決方案，滿足他們不同的需求和使用場景。
 

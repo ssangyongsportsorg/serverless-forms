@@ -1,3 +1,48 @@
+## Improved Version of Serverless Forms
+
+This is an enhanced version based on [lexoyo's serverless-forms](https://github.com/lexoyo/serverless-forms/), offering users a more flexible and powerful serverless form solution.
+
+### Key Additions
+
+1. **Post-submission Redirect**: Allows redirection to custom web pages like thank you pages or order confirmation pages after form submission. (Requires manual modification of index.js)
+
+2. **Customer Reply Functionality**: Adds the customer's email address as a "reply-to" address in the sent email, facilitating customer interaction.
+
+3. **Multi-recipient Support**: Now capable of sending form content to multiple specified email addresses simultaneously.
+
+4. **Spam Detection and Filtering**: Effectively detects and prevents spam using keyword filtering, option filtering, and honeypot mechanisms.
+
+5. **Thank You Page Redirection**: Automatically redirects to a specified thank you page after successful form submission. (Requires manual modification of index.js)
+
+6. **Referrer Checking**: Only allows form submissions from specified websites, enhancing system security. (Requires manual modification of index.js)
+
+## Configuration [Copied from the Original Project](https://github.com/lexoyo/serverless-forms/)
+
+You can configure some additional features through environment variables. Detailed descriptions of the environment variables are as follows:
+
+| Environment Variable | Description |
+|---|---|
+| MESSAGE | Message displayed after form submission. May contain HTML. Default: 'Thank you for your submission.' |
+| TO | Email address to which the form will be sent (your email) |
+| FROM | Email address used as the sender's address |
+| SITE_NAME | The name of your site, displayed in the email subject |
+| PORT | Port to listen for form submissions |
+| FORM | Path to the HTML file containing the sample form, default is ./form.html |
+| EMAIL_HOST | SMTP configuration: [See options here](https://nodemailer.com/smtp/) |
+| EMAIL_PORT | SMTP configuration: [See options here](https://nodemailer.com/smtp/) |
+| EMAIL_USER | SMTP configuration: [See options here](https://nodemailer.com/smtp/) |
+| EMAIL_PASS | SMTP configuration: [See options here](https://nodemailer.com/smtp/) |
+
+For the additional features we've added, you'll need to modify the code yourself. You can directly edit the index.js file for customization. Due to ~~being lazy~~, we didn't directly incorporate these features into the environment variable configuration.
+
+## Reporting Issues
+
+Contact: dev@ssangyongsports.eu.org or submit problems in the issues section.
+
+With these powerful new features, the improved version not only retains the simplicity and ease of use of the original, but also enhances customization, security, and user experience, better meeting the needs of practical application scenarios. Feel free to reach out with any other questions or requests at any time.
+
+
+
 ## 改進版無伺服器表單 Serverless Forms
 
 這是一個在[lexoyo的serverless-forms](https://github.com/lexoyo/serverless-forms/)基礎上進行改進和增強的版本,為使用者提供了更加靈活和強大的無伺服器表單解決方案。

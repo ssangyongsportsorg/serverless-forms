@@ -27,20 +27,22 @@
 
 ## 回報錯誤
 聯繫：dev@ssangyongsports.eu.org或在issues中提交問題
-## 配置 [專案](https://github.com/lexoyo/serverless-forms/)
-以下是您可以使用的所有环境变量
-| 环境变量 | 描述 |
+## 配置 [從專案複製](https://github.com/lexoyo/serverless-forms/)
+
+我們新增的功能你需要在index.js，這是你可以透過部署平台提交的變數
+
+| 環境變量 | 描述 |
 |---|---|
-| MESSAGE | 表单提交后显示的消息。 可以包含 HTML 代码。 默认为“感谢您的提交。” |
-| TO | 用于将表单发送到的电子邮件地址（您的电子邮件） |
-| FROM | 用作发件人地址的电子邮件地址 |
-| SITE_NAME | 网站名称，将显示在电子邮件标题中 |
-| PORT | 用于侦听表单提交的端口 |
-| FORM | 包含示例表单的 HTML 文件的路径，默认为 ./form.html |
-| EMAIL_HOST | SMTP 配置：在此处查看这些选项: https://nodemailer.com/smtp/ |
-| EMAIL_PORT | SMTP 配置：在此处查看这些选项: https://nodemailer.com/smtp/ |
-| EMAIL_USER | SMTP 配置：在此处查看这些选项: https://nodemailer.com/smtp/ |
-| EMAIL_PASS | SMTP 配置：在此处查看这些选项: https://nodemailer.com/smtp/ |
+| MESSAGE | 表單提交後顯示的消息。可能包含HTML。默認值：'感謝您的提交。' |
+| TO | 將表單發送到的電子郵件地址（您的電子郵件） |
+| FROM | 作為寄件人地址使用的電子郵件地址 |
+| SITE_NAME | 您站點的名稱，將顯示在電子郵件標題中 |
+| PORT | 監聽表單提交的端口 |
+| FORM | 包含示例表單的HTML文件的路徑，默認為./form.html |
+| EMAIL_HOST | SMTP配置：[在此處查看這些選項](https://nodemailer.com/smtp/) |
+| EMAIL_PORT | SMTP配置：[在此處查看這些選項](https://nodemailer.com/smtp/) |
+| EMAIL_USER | SMTP配置：[在此處查看這些選項](https://nodemailer.com/smtp/) |
+| EMAIL_PASS | SMTP配置：[在此處查看這些選項](https://nodemailer.com/smtp/) |
 
 通過這些新增的功能，我們希望能夠為使用者提供一個更加全面和強大的無伺服器表單解決方案，滿足他們不同的需求和使用場景。
 

@@ -76,54 +76,47 @@ function processFormFieldsIndividual(req, res) {
           });
           // 呈現HTML畫面
           res.write(`<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>禁止垃圾訊息</title>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文字黑名單-雙龍體育</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
+      background-color: #f5f5f5;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
     }
 
-    .container {
+    .error-container {
       background-color: #fff;
       padding: 30px;
-      border-radius: 5px;
+      border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       text-align: center;
-      max-width: 600px;
+      max-width: 500px;
     }
 
     h1 {
-      color: #333;
+      color: #dc3545;
       margin-bottom: 20px;
     }
 
     p {
-      color: #666;
-      line-height: 1.5;
-      margin-bottom: 20px;
-    }
-
-    a {
-      color: #007bff;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
+      color: #6c757d;
+      margin-bottom: 15px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>禁止垃圾訊息</h1>
+  <div class="error-container">
+     <h1>禁止垃圾訊息</h1>
     <p>抱歉，您的消息似乎包含垃圾郵件內容或已被封鎖的選項，因此已被封鎖。更多信息：<a href="https://ssangyongsports.eu.org/blog/ban" target="_blank">https://ssangyongsports.eu.org/blog/ban</a></p>
   </div>
 </body>

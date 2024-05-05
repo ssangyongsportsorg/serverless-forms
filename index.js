@@ -153,13 +153,22 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-function sendMail(text, replyTo, subject, clientIP) {
+function sendMail(fields, replyTo, subject, clientIP) {
   const mailOptions = {
     from: process.env.FROM || 'Email form data bot <no-reply@no-email.com>',
     to: [process.env.TO, process.env.TO2],
     replyTo: replyTo,
     subject: subject,
-    text: `${text}\n\nClient IP: ${clientIP}`
+    html: `
+      <div style="font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 20px;">
+        <h2 style="color: #333333;">${fields['subject']}</h2>
+        <p style="color: #666666;">訊息內容:</p>
+        <div style="background-color: #ffffff; padding: 20px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
+          <pre style="white-space: pre-wrap; word-wrap: break-word;">${fields['message']}</pre>
+        </div>
+        <p style="color: #666666; margin-top: 20px;">客戶端 IP: ${clientIP}</p>
+      </div>
+    `
   };
 
   console.log('sending email:', mailOptions);

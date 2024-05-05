@@ -161,10 +161,10 @@ function sendMail(fields, replyTo, subject, clientIP) {
     subject: subject,
     html: `
       <div style="font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 20px;">
-        <h2 style="color: #333333;">${fields.hasOwnProperty('subject') ? fields['subject'] : ''}</h2>
+        <h2 style="color: #333333;">${fields['subject']}</h2>
         <p style="color: #666666;">訊息內容:</p>
         <div style="background-color: #ffffff; padding: 20px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-   ${message}
+          <pre style="white-space: pre-wrap; word-wrap: break-word;">${message}</pre>
         </div>
         <p style="color: #666666; margin-top: 20px;">客戶端 IP: ${clientIP}</p>
       </div>

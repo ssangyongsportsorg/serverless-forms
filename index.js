@@ -128,7 +128,7 @@ function processFormFieldsIndividual(req, res) {
         const replyTo = fields['Email'];
         const message = fields['message'];
         const subject = fields['Subject'];
-        sendMail(util.inspect(fields), replyTo, subject, clientIP);
+        sendMail(util.inspect(fields), replyTo, subject, message);
       }
 
       res.writeHead(302, {
@@ -167,7 +167,6 @@ function sendMail(fields, replyTo, message, subject, clientIP) {
         <div style="background-color: #ffffff; padding: 20px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
           <pre style="white-space: pre-wrap; word-wrap: break-word;">${message}</pre>
         </div>
-        <p style="color: #666666; margin-top: 20px;">客戶端 IP: ${clientIP}</p>
       </div>
     `
   };

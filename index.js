@@ -71,57 +71,10 @@ function processFormFieldsIndividual(req, res) {
         // 檢查主旨和內容是否包含垃圾關鍵字
         if (spamRegex.test(fields['Subject']) || spamRegex.test(fields['message']) || optionsRegex.test(fields['_email.from'])) {
           console.log('Spam or blocked option detected!');
-          res.writeHead(403, {
-            'Content-Type': 'text/html; charset=utf-8'
-          });
-          // 呈現HTML畫面
-          res.write(`<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>文字黑名單-雙龍體育</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-
-    .error-container {
-      background-color: #fff;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-      text-align: center;
-      max-width: 500px;
-    }
-
-    h1 {
-      color: #dc3545;
-      margin-bottom: 20px;
-    }
-
-    p {
-      color: #6c757d;
-      margin-bottom: 15px;
-    }
-  </style>
-</head>
-<body>
-  <div class="error-container">
-     <h1>禁止垃圾訊息</h1>
-    <p>抱歉，您的消息似乎包含垃圾郵件內容或已被封鎖的選項，因此已被封鎖。更多信息：<a href="https://ssangyongsports.eu.org/blog/ban" target="_blank">https://ssangyongsports.eu.org/blog/ban</a></p>
-  </div>
-</body>
-</html>`);
-          res.end();
+        res.writeHead(403, {
+  'Content-Type': 'text/plain; charset=utf-8'
+});
+res.end('抱歉，您的消息似乎包含垃圾郵件內容或已被封鎖的選項，因此已被封鎖。更多信息：https://ssangyongsports.eu.org/blog/ban');
           return;
         }
 
@@ -137,9 +90,9 @@ function processFormFieldsIndividual(req, res) {
     });
   } else {
     res.writeHead(403, {
-      'Content-Type': 'text/plain; charset=utf-8'
-    });
-    res.end('您只能使用 ssangyongsports.eu.org/contact 與我們聯繫,不能使用其他網站。');
+  'Content-Type': 'text/plain; charset=utf-8'
+});
+res.end('您只能使用 ssangyongsports.eu.org/contact 與我們聯繫,不能使用其他網站。');
   }
 }
 
@@ -153,22 +106,13 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-function sendMail(fields, replyTo, subject, clientIP) {
+function sendMail(text, replyTo, subject, clientIP) {
   const mailOptions = {
     from: process.env.FROM || 'Email form data bot <no-reply@no-email.com>',
     to: [process.env.TO, process.env.TO2],
     replyTo: replyTo,
     subject: subject,
-    html: `
-      <div style="font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 20px;">
-        <h2 style="color: #333333;">${fields['subject']}</h2>
-        <p style="color: #666666;">訊息內容:</p>
-        <div style="background-color: #ffffff; padding: 20px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-          <pre style="white-space: pre-wrap; word-wrap: break-word;">${message}</pre>
-        </div>
-        <p style="color: #666666; margin-top: 20px;">客戶端 IP: ${clientIP}</p>
-      </div>
-    `
+    text: `${text}\n\nClient IP: ${clientIP}`
   };
 
   console.log('sending email:', mailOptions);

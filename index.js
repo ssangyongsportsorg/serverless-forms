@@ -160,13 +160,13 @@ function sendMail(fields, replyTo, message, subject, clientIP) {
     from: process.env.FROM || 'Email form data bot <no-reply@no-email.com>',
     to: [process.env.TO, process.env.TO2],
     replyTo: replyTo,
-    subject: subject,
+    subject: message,
     html: `
       <div style="font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 20px;">
-        <h2 style="color: #333333;">${subject}</h2>
+        <h2 style="color: #333333;">${message}</h2>
         <p style="color: #666666;">訊息內容:</p>
         <div style="background-color: #ffffff; padding: 20px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-          <pre style="white-space: pre-wrap; word-wrap: break-word;">${message}</pre>
+          <pre style="white-space: pre-wrap; word-wrap: break-word;">${subject}</pre>
         </div>
       </div>
     `

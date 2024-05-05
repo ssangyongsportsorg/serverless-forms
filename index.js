@@ -126,8 +126,9 @@ function processFormFieldsIndividual(req, res) {
         }
 
         const replyTo = fields['Email'];
-        const message = fields['message'];
+        
         const subject = fields['Subject'];
+const message = fields['message'];
         sendMail(util.inspect(fields), replyTo, subject, message);
       }
 

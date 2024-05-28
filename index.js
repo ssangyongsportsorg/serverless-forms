@@ -5,26 +5,19 @@ const fs = require('fs');
 const formidable = require("formidable");
 const util = require('util');
 const nodemailer = require('nodemailer');
+const AkismetClient = require('akismet-api');
 
-// 定義一個包含垃圾關鍵字的陣列
-const spamKeywords = [
-  'Hi, i writing about your   price',
-  'Aloha,   write about your the price', 
-  'Hi, i write about   the price for reseller',
-  '幹你娘',
-  'Hello  i wrote about your   price for reseller',
-  'prices',
-  'price',
-];
+// Initialize Akismet client
+const akismetClient = new AkismetClient({
+  key: process.env.AKISMET_API_KEY,
+  blog: 'https://ssangyongsports.eu.org'
+});
 
-// 定義一個包含需要過濾選項的陣列
+// Define blocked options
 const blockedOptions = ['？']; 
-
-// 使用正則表達式建立黑名單模式
-const spamRegex = new RegExp(spamKeywords.join('|'), 'i');
 const optionsRegex = new RegExp(blockedOptions.join('|'), 'i');
 
-// setup the server
+// Setup the server
 const server = http.createServer(function (req, res) {
   if (req.method.toLowerCase() === 'get') {
     displayForm(res);
@@ -37,9 +30,15 @@ const port = process.env.PORT || 8080;
 server.listen(port);
 console.log("server listening on ", port);
 
-// serve HTML file
+// Serve HTML file
 function displayForm(res) {
   fs.readFile(process.env.FORM || 'form.html', function (err, data) {
+    if (err) {
+      console.error('Error reading form file:', err);
+      res.writeHead(500, {'Content-Type': 'text/plain'});
+      res.end('Internal Server Error');
+      return;
+    }
     res.writeHead(200, {
       'Content-Type': 'text/html',
       'Content-Length': data.length
@@ -49,33 +48,118 @@ function displayForm(res) {
   });
 }
 
-// get the POST data and call the sendMail method
+// Get the POST data and call the sendMail method
 function processFormFieldsIndividual(req, res) {
   const referer = req.headers.referer || '';
   const clientIP = req.socket.remoteAddress;
 
   if (referer.startsWith('https://ssangyongsports.eu.org')) {
     const form = new formidable.IncomingForm();
-    form.parse(req, function (err, fields) {
+    form.parse(req, async function (err, fields) {
       if (err) {
         console.error(err);
-      } else {
-        // 檢查蜜罐欄位
-        if (fields['honeypot']) {
-          console.log('Spam detected!');
-          res.writeHead(403, { 'Content-Type': 'text/plain' });
-          res.end('Ha ha, we caught you! Please stop sending this spam contact.');
-          return;
-        }
+        res.writeHead(500, {'Content-Type': 'text/plain'});
+        res.end('Internal Server Error');
+        return;
+      }
 
-        // 檢查主旨和內容是否包含垃圾關鍵字
-        if (spamRegex.test(fields['Subject']) || spamRegex.test(fields['message']) || optionsRegex.test(fields['_email.from'])) {
-          console.log('Spam or blocked option detected!');
-          res.writeHead(403, {
-            'Content-Type': 'text/html; charset=utf-8'
-          });
-          // 呈現HTML畫面
-          res.write(`<!DOCTYPE html>
+      // Check honeypot field
+      if (fields['honeypot']) {
+        console.log('Spam detected by honeypot!');
+        res.writeHead(403, { 'Content-Type': 'text/plain' });
+        res.end('Ha ha, we caught you! Please stop sending this spam contact.');
+        return;
+      }
+
+      // Check for blocked options
+      if (optionsRegex.test(fields['_email.from'])) {
+        console.log('Blocked option detected!');
+        res.writeHead(403, {
+          'Content-Type': 'text/html; charset=utf-8'
+        });
+        res.write(renderSpamBlockedPage());
+        res.end();
+        return;
+      }
+
+      // Use Akismet to check for spam
+      const isSpam = await akismetClient.checkSpam({
+        user_ip: clientIP,
+        user_agent: req.headers['user-agent'],
+        referrer: referer,
+        comment_type: 'contact-form',
+        comment_author: fields['Email'],
+        comment_author_email: fields['Email'],
+        comment_content: `${fields['Subject']}\n${fields['message']}`
+      });
+
+      if (isSpam) {
+        console.log('Spam detected by Akismet!');
+        res.writeHead(403, {
+          'Content-Type': 'text/html; charset=utf-8'
+        });
+        res.write(renderSpamBlockedPage());
+        res.end();
+        return;
+      }
+
+      const replyTo = fields['Email'];
+      const subject = fields['Subject'];
+      const message = fields['message'];
+      sendMail(util.inspect(fields), replyTo, subject, message);
+
+      res.writeHead(302, {
+        'Location': 'https://ssangyongsports.eu.org/thanks'
+      });
+      res.end();
+    });
+  } else {
+    res.writeHead(403, {
+      'Content-Type': 'text/plain; charset=utf-8'
+    });
+    res.end('您只能使用 ssangyongsports.eu.org/contact 與我們聯繫,不能使用其他網站。');
+  }
+}
+
+const transporter = nodemailer.createTransport({
+  host: process.env.EMAIL_HOST,
+  port: process.env.EMAIL_PORT,
+  secure: process.env.EMAIL_PORT === '465',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
+  }
+});
+
+function sendMail(fields, replyTo, subject, message) {
+  const mailOptions = {
+    from: process.env.FROM || 'Email form data bot <no-reply@no-email.com>',
+    to: [process.env.TO, process.env.TO2],
+    replyTo: replyTo,
+    subject: subject,
+    html: `
+      <div style="font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 20px;">
+        <h2 style="color: #333333;">${subject}</h2>
+        <p style="color: #666666;">訊息內容:</p>
+        <div style="background-color: #ffffff; padding: 20px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
+          <pre style="white-space: pre-wrap; word-wrap: break-word;">${message}</pre>
+        </div>
+      </div>
+    `
+  };
+
+  console.log('sending email:', mailOptions);
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return console.log(error);
+    }
+    console.log('Message %s sent: %s', info.messageId, info.response);
+  });
+}
+
+function renderSpamBlockedPage() {
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -120,64 +204,5 @@ function processFormFieldsIndividual(req, res) {
     <p>抱歉，您的消息似乎包含垃圾郵件內容或已被封鎖的選項，因此已被封鎖。更多信息：<a href="https://ssangyongsports.eu.org/blog/ban" target="_blank">https://ssangyongsports.eu.org/blog/ban</a></p>
   </div>
 </body>
-</html>`);
-          res.end();
-          return;
-        }
-
-        const replyTo = fields['Email'];
-        
-        const subject = fields['Subject'];
-const message = fields['message'];
-        sendMail(util.inspect(fields), replyTo, subject, message);
-      }
-
-      res.writeHead(302, {
-        'Location': 'https://ssangyongsports.eu.org/thanks'
-      });
-      res.end();
-    });
-  } else {
-    res.writeHead(403, {
-      'Content-Type': 'text/plain; charset=utf-8'
-    });
-    res.end('您只能使用 ssangyongsports.eu.org/contact 與我們聯繫,不能使用其他網站。');
-  }
-}
-
-const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST,
-  port: process.env.EMAIL_PORT,
-  secure: process.env.EMAIL_PORT === '465',
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
-});
-
-function sendMail(fields, replyTo, message, subject, clientIP) {
-  const mailOptions = {
-    from: process.env.FROM || 'Email form data bot <no-reply@no-email.com>',
-    to: [process.env.TO, process.env.TO2],
-    replyTo: replyTo,
-    subject: message,
-    html: `
-      <div style="font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 20px;">
-        <h2 style="color: #333333;">${message}</h2>
-        <p style="color: #666666;">訊息內容:</p>
-        <div style="background-color: #ffffff; padding: 20px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-          <pre style="white-space: pre-wrap; word-wrap: break-word;">${subject}</pre>
-        </div>
-      </div>
-    `
-  };
-
-  console.log('sending email:', mailOptions);
-
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      return console.log(error);
-    }
-    console.log('Message %s sent: %s', info.messageId, info.response);
-  });
+</html>`;
 }

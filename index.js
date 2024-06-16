@@ -200,8 +200,14 @@ function renderSpamBlockedPage() {
 </head>
 <body>
   <div class="error-container">
-     <h1>禁止垃圾訊息</h1>
-    <p>抱歉，您的消息似乎包含垃圾郵件內容或已被封鎖的選項，因此已被封鎖。更多信息：<a href="https://ssangyongsports.eu.org/blog/ban" target="_blank">https://ssangyongsports.eu.org/blog/ban</a></p>
+     <h1>不好意思，請先解決這些問題再聯繫我們。</h1>
+    <p>我們知道你肯定不是機器人，但是我們最近經常收到機器人連續垃圾聯繫攻擊，請先刪除以下被我們設為黑名單的文字：「Hi, I’m writing about your price」
+「Aloha, write about your the price」
+「Hi, I write about the price for reseller」
+「幹你娘」（不雅用語）
+「Hello I wrote about your price for reseller」
+「prices」
+「price」</p><p>更多信息：<a href="https://ssangyongsports.eu.org/blog/ban" target="_blank">https://ssangyongsports.eu.org/blog/ban</a></p>
   </div>
 </body>
 </html>`;

@@ -78,7 +78,7 @@ function processFormFieldsIndividual(req, res) {
           res.write(`<!DOCTYPE html>
 <html lang="zh-tw"><head><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="utf-8">
-<title>405 Method 錯誤</title>
+<title>文字中包含了黑名單中的詞語。</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet">
  <style>
         @font-face {

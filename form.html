@@ -370,6 +370,24 @@
 </header></article>
 </div></main>
 <footer class="bg-gray-50 dark:bg-gray-800"></footer>
+
+    <script>
+      (function(d,t) {
+        var BASE_URL="https://chatwoot-6gvm.onrender.com";
+        var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        g.src=BASE_URL+"/packs/js/sdk.js";
+        g.defer = true;
+        g.async = true;
+        s.parentNode.insertBefore(g,s);
+        g.onload=function(){
+          window.chatwootSDK.run({
+            websiteToken: '68q4sMgim6ZLZkAGQUmwLSco',
+            baseUrl: BASE_URL
+          })
+        }
+      })(document,"script");
+    </script>
+    
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 
 

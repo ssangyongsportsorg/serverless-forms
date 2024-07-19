@@ -516,6 +516,7 @@ function sendMail(fields, replyTo, message, subject, clientIP) {
         <p style="color: #666666;">訊息內容:</p>
         <div style="background-color: #ffffff; padding: 20px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
           <pre style="white-space: pre-wrap; word-wrap: break-word;">${subject}</pre>
+          <p>這是由雙龍體育技術團隊開發的聯繫系統,任何技術問題請聯繫help@ssport.eu.org<p>
         </div>
       </div>
     `

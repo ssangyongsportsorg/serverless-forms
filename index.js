@@ -460,7 +460,8 @@ function processFormFieldsIndividual(req, res) {
                 <li>「price」</li>
             </ul>
         </div>
-        <p>為了避免這些垃圾訊息對我們的客服和系統造成干擾，我們將實施新的政策。感谢您的理解和配合！</p><p></p><button onclick="history.back()" type="button" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">回上一頁</button>
+        <p>為了避免這些垃圾訊息對我們的客服和系統造成干擾，我們將實施新的政策。感谢您的理解和配合！</p><p></p><button onclick="history.back()" type="button" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">回上一頁</button><p>這是由雙龍體育技術團隊開發的聯繫系統,任何技術問題請聯繫help@ssport.eu.org
+</p>
 </header></article>
 </div></main>
 <footer class="bg-gray-50 dark:bg-gray-800"></footer>

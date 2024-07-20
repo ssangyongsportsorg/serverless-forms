@@ -504,9 +504,9 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-function sendMail(fields, replyTo, message, subject, clientIP, Name) {
+function sendMail(fields, replyTo, message, subject, clientIP, name) {
   const mailOptions = {
-    from: Name,
+    from: name,
     to: [process.env.TO, process.env.TO2],
     replyTo: replyTo,
     subject: message,
@@ -518,7 +518,7 @@ function sendMail(fields, replyTo, message, subject, clientIP, Name) {
           <pre style="white-space: pre-wrap; word-wrap: break-word;">${subject}</pre>
           
         </div>
-        <p>這封聯繫由${Name}在雙龍體育官網使用${replyTo}提交的表單<p>
+        <p>這封聯繫由${name}在雙龍體育官網使用${replyTo}提交的表單<p>
         <p>這是由雙龍體育技術團隊開發的聯繫系統,任何技術問題請聯繫tech@ssport.eu.org<p>
       </div>
     `

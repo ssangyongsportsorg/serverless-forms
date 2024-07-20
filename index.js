@@ -475,10 +475,12 @@ function processFormFieldsIndividual(req, res) {
         }
 
         const replyTo = fields['Email'];
-        const name = fields['Name'];
-        const subject = fields['Subject'];
+const name = fields['Name'];
+const subject = fields['Subject'];
 const message = fields['message'];
-        sendMail(util.inspect(fields), replyTo, subject, message, name);
+
+sendMail(name, replyTo, subject, message);
+
       }
 
       res.writeHead(302, {
@@ -504,12 +506,12 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-function sendMail(fields, replyTo, message, subject, clientIP, name) {
+function sendMail(name, replyTo, subject, message) {
   const mailOptions = {
     from: name,
     to: [process.env.TO, process.env.TO2],
     replyTo: replyTo,
-    subject: message,
+    subject: subject,
     html: `
       <div style="font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 20px;">
         <h2 style="color: #333333;">${message}</h2>

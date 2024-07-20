@@ -508,7 +508,7 @@ const transporter = nodemailer.createTransport({
 
 function sendMail(name, replyTo, subject, message) {
   const mailOptions = {
-    from: name,
+    from: process.env.FROM || 'Email form data bot <no-reply@no-email.com>',
     to: [process.env.TO, process.env.TO2],
     replyTo: replyTo,
     subject: subject,

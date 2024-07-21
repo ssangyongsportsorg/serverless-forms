@@ -514,10 +514,10 @@ function sendMail(name, replyTo, subject, message) {
     subject: subject,
     html: `
       <div style="font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 20px;">
-        <h2 style="color: #333333;">${message}</h2>
+        <h2 style="color: #333333;">${subject}</h2>
         <p style="color: #666666;">訊息內容:</p>
         <div style="background-color: #ffffff; padding: 20px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
-          <pre style="white-space: pre-wrap; word-wrap: break-word;">${subject}</pre>
+          <pre style="white-space: pre-wrap; word-wrap: break-word;">${message}</pre>
           
         </div>
         <p>這封聯繫由${name}在雙龍體育官網使用${replyTo}提交的表單<p>

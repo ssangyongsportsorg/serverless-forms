@@ -508,7 +508,7 @@ const transporter = nodemailer.createTransport({
 
 function sendMail(name, replyTo, subject, message) {
   const mailOptions = {
-    from: 表單提交系統,
+    from: `"${fields['name']}"`,  // 使用客戶的名稱作為寄送人名稱
     to: [process.env.TO, process.env.TO2],
     replyTo: replyTo,
     subject: subject,

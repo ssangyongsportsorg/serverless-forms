@@ -508,7 +508,7 @@ const transporter = nodemailer.createTransport({
 
 function sendMail(name, replyTo, subject, message) {
   const mailOptions = {
-    from: name,
+    from: 表單提交系統,
     to: [process.env.TO, process.env.TO2],
     replyTo: replyTo,
     subject: subject,

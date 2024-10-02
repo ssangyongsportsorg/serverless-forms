@@ -522,6 +522,7 @@ function sendMail(name, replyTo, subject, message) {
         </div>
         <p>這封聯繫由${name}在雙龍體育官網使用${replyTo}提交的表單<p>
         <p>這是由雙龍體育技術團隊開發的聯繫系統,任何技術問題請聯繫tech@ssangyongsports.eu.org<p>
+<p>請勿將客戶的電子郵件視為：ssangyongsportsteam@gmail.com這只是用於寄送通知系統，${name}客戶的電子郵件為${replyTo}
       </div>
     `
   };

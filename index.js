@@ -574,10 +574,10 @@ function sendMail(name, replyTo, subject, message) {
             border-radius: 6px;
             margin-top: 15px;
           ">
-            ⚠️ ssangyongsportsteam@gmail.com 僅用於通知系統
+            ⚠️ ssangyongsportsteam@gmail.com 僅用於通知客服系統，你可以忽略
           </p>
           <p style="margin-top: 10px;">
-            技術支持: tech@ssangyongsports.eu.org
+            技術提供: tech@ssangyongsports.eu.org
           </p>
         </div>
       </div>

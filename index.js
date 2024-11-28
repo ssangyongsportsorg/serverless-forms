@@ -514,188 +514,72 @@ function sendMail(name, replyTo, subject, message) {
     subject: subject,
     html: `
       <div style="
-        font-family: 'Space Grotesk', 'Roboto Mono', monospace; 
-        background: linear-gradient(45deg, #121212, #1e1e1e); 
-        color: #e0e0e0;
-        max-width: 650px; 
-        margin: 20px auto; 
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        max-width: 600px;
+        margin: 20px auto;
         padding: 30px;
-        border-radius: 15px;
-        box-shadow: 
-          0 15px 35px rgba(0,0,0,0.4), 
-          0 5px 15px rgba(0,0,0,0.3),
-          0 0 20px rgba(51, 153, 255, 0.3);
-        border: 2px solid rgba(51, 153, 255, 0.2);
-        position: relative;
-        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        color: #2c3e50;
+        line-height: 1.6;
       ">
         <div style="
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: 4px;
-          background: linear-gradient(
-            90deg, 
-            #3399ff, 
-            #33ccff, 
-            #ff33cc, 
-            #ff3399
-          );
-          background-size: 400% 400%;
-          animation: gradientBorder 10s ease infinite;
-        "></div>
-
-        <header style="
-          display: flex; 
-          align-items: center; 
-          justify-content: space-between; 
-          margin-bottom: 25px;
-          padding-bottom: 20px;
-          border-bottom: 1px solid rgba(255,255,255,0.1);
+          background: #3498db;
+          color: white;
+          padding: 15px;
+          border-radius: 8px;
+          margin-bottom: 20px;
+          text-align: center;
         ">
-          <div style="
-            display: flex;
-            align-items: center;
-          ">
-            <div style="
-              background: linear-gradient(45deg, #3399ff, #33ccff);
-              width: 50px;
-              height: 50px;
-              border-radius: 10px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              margin-right: 15px;
-            ">
-              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                <polyline points="22,6 12,13 2,6"></polyline>
-              </svg>
-            </div>
-            <h1 style="
-              font-size: 24px; 
-              color: #e0e0e0; 
-              margin: 0;
-              background: linear-gradient(45deg, #3399ff, #33ccff);
-              -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
-            ">
-              ${subject}
-            </h1>
-          </div>
-          <span style="
-            background: rgba(51, 153, 255, 0.2); 
-            color: #33ccff; 
-            padding: 8px 15px; 
-            border-radius: 20px; 
-            font-size: 12px;
-            border: 1px solid rgba(51, 153, 255, 0.3);
-          ">
-            🔒 安全通知
-          </span>
-        </header>
+          <h1 style="margin: 0; font-size: 22px;">🚀 ${subject}</h1>
+        </div>
 
-        <section style="
-          background: rgba(255,255,255,0.05); 
-          padding: 25px; 
-          border-radius: 10px; 
-          margin-bottom: 25px;
-          border: 1px solid rgba(255,255,255,0.1);
+        <div style="
+          background: white;
+          padding: 25px;
+          border-radius: 10px;
+          box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         ">
           <h2 style="
-            color: #33ccff; 
-            font-size: 18px; 
+            color: #3498db;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
             margin-bottom: 15px;
-            display: flex;
-            align-items: center;
           ">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 10px;">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-              <polyline points="22 4 12 14.01 9 11.01"></polyline>
-            </svg>
             訊息內容
           </h2>
+
           <pre style="
             white-space: pre-wrap; 
             word-wrap: break-word;
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 6px;
             font-family: 'Fira Code', monospace;
-            background-color: rgba(0,0,0,0.3);
-            padding: 20px;
-            border-radius: 8px;
-            line-height: 1.6;
-            color: #33ccff;
-            border: 1px solid rgba(51, 153, 255, 0.2);
           ">${message}</pre>
-        </section>
+        </div>
 
-        <footer style="
-          text-align: center; 
-          color: #7f8c8d; 
-          font-size: 12px;
-          padding-top: 20px;
-          border-top: 1px solid rgba(255,255,255,0.1);
+        <div style="
+          margin-top: 20px;
+          text-align: center;
+          font-size: 14px;
+          color: #7f8c8d;
         ">
-          <div style="
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 15px;
-          ">
-            <div style="
-              background: rgba(51, 153, 255, 0.2);
-              padding: 10px 15px;
-              border-radius: 10px;
-              margin: 0 10px;
-              display: flex;
-              align-items: center;
-            ">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#33ccff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-              由 ${name} 提交
-            </div>
-            <div style="
-              background: rgba(51, 153, 255, 0.2);
-              padding: 10px 15px;
-              border-radius: 10px;
-              display: flex;
-              align-items: center;
-            ">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#33ccff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-              </svg>
-              ${replyTo}
-            </div>
-          </div>
-          
-          <p style="margin-top: 15px;">
-            <strong style="color: #33ccff;">雙龍體育技術團隊</strong> 安全驗證
-          </p>
-          <p style="margin-top: 10px;">
-            <small>📧 技術支持: tech@ssangyongsports.eu.org</small>
-          </p>
-          
-          <div style="
-            background: rgba(255,0,100,0.1); 
-            padding: 12px; 
-            border-radius: 8px; 
-            margin-top: 20px;
-            border: 1px solid rgba(255,0,100,0.2);
-            color: #ff3399;
+          <p>由 ${name} 透過 ${replyTo} 提交</p>
+          <p>🔒 雙龍體育技術團隊安全驗證</p>
+          <p style="
+            background-color: #ecf0f1;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 15px;
           ">
             ⚠️ ssangyongsportsteam@gmail.com 僅用於通知系統
-          </div>
-        </footer>
-
-        <style>
-          @keyframes gradientBorder {
-            0% {background-position: 0% 50%;}
-            50% {background-position: 100% 50%;}
-            100% {background-position: 0% 50%;}
-          }
-        </style>
+          </p>
+          <p style="margin-top: 10px;">
+            技術支持: tech@ssangyongsports.eu.org
+          </p>
+        </div>
       </div>
     `
   };

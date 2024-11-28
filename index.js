@@ -508,7 +508,7 @@ const transporter = nodemailer.createTransport({
 
 function sendMail(name, replyTo, subject, message) {
   const mailOptions = {
-    from: `"表單提交系統"`,
+    from: `"${name}" <${process.env.EMAIL_USER}>`,
     to: [process.env.TO, process.env.TO2],
     replyTo: replyTo,
     subject: subject,
@@ -518,11 +518,10 @@ function sendMail(name, replyTo, subject, message) {
         <p style="color: #666666;">訊息內容:</p>
         <div style="background-color: #ffffff; padding: 20px; border-radius: 5px; box-shadow: 0 0 5px rgba(0,0,0,0.1);">
           <pre style="white-space: pre-wrap; word-wrap: break-word;">${message}</pre>
-          
         </div>
         <p>這封聯繫由${name}在雙龍體育官網使用${replyTo}提交的表單<p>
         <p>這是由雙龍體育技術團隊開發的聯繫系統,任何技術問題請聯繫tech@ssangyongsports.eu.org<p>
-<p>請勿將客戶的電子郵件視為：ssangyongsportsteam@gmail.com這只是用於寄送通知系統，${name}客戶的電子郵件為${replyTo}
+        <p>請勿將客戶的電子郵件視為：ssangyongsportsteam@gmail.com這只是用於寄送通知系統，${name}客戶的電子郵件為${replyTo}
       </div>
     `
   };

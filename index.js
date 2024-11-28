@@ -1,5 +1,5 @@
 'use strict';
-
+const { RateLimiterMemory } = require('rate-limiter-flexible');
 const http = require('http');
 const fs = require('fs');
 const formidable = require("formidable");
@@ -32,7 +32,22 @@ const server = http.createServer(function (req, res) {
     processFormFieldsIndividual(req, res);
   }
 });
+const rateLimiter = new RateLimiterMemory({
+  points: 3, // 3 requests
+  duration: 3600, // per 1 hour by IP
+});
 
+const clientIP = req.socket.remoteAddress;
+
+rateLimiter.consume(clientIP)
+  .then(() => {
+    // Proceed with form processing
+    // Existing code to process form
+  })
+  .catch(() => {
+    res.writeHead(429, { 'Content-Type': 'text/plain' });
+    res.end('Too many requests. Please try again later.');
+  });
 const port = process.env.PORT || 8080;
 server.listen(port);
 console.log("server listening on ", port);
@@ -506,7 +521,7 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-function sendMail(name, replyTo, subject, message) {
+function sendMail(name, replyTo, subject, message, clientIP) {
   const mailOptions = {
     from: `"${name}" <${process.env.EMAIL_USER}>`,
     to: [process.env.TO, process.env.TO2],
@@ -567,6 +582,7 @@ function sendMail(name, replyTo, subject, message) {
           color: #7f8c8d;
         ">
           <p>由 ${name} 透過 ${replyTo} 提交</p>
+          <p>提交者IP: ${clientIP}</p>
           <p>🔒 雙龍體育技術團隊安全驗證</p>
           <p style="
             background-color: #ecf0f1;

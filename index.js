@@ -778,9 +778,8 @@ sendMail(name, replyTo, subject, message);
 
       }
 
-      res.writeHead(302, {
-        'Location': 'https://ssangyongsports.eu.org/thanks'
-      });
+      res.redirect(`https://ssangyongsports.eu.org/thanks?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}`);
+  });
       res.end();
     });
   } else {

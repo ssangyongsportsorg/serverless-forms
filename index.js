@@ -776,18 +776,13 @@ const message = fields['message'];
 
 sendMail(name, replyTo, subject, message);
 
-      }
-
-      res.redirect(`https://ssangyongsports.eu.org/thanks?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}`);
+res.redirect(`https://ssangyongsports.eu.org/thanks?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}`);
+res.end();
+} else {
+  res.writeHead(403, {
+    'Content-Type': 'text/plain; charset=utf-8'
   });
-      res.end();
-    });
-  } else {
-    res.writeHead(403, {
-      'Content-Type': 'text/plain; charset=utf-8'
-    });
-    res.end('您只能使用 ssangyongsports.eu.org/contact 與我們聯繫,不能使用其他網站。');
-  }
+  res.end('您只能使用 ssangyongsports.eu.org/contact 與我們聯繫,不能使用其他網站。');
 }
 
 const transporter = nodemailer.createTransport({

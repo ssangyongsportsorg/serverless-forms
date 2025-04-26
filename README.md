@@ -1,5 +1,3 @@
-# 這個是雙龍體育官網使用的代碼
-[雙龍體育](https://ssangyongsports.eu.org)
 ## Improved Version of Serverless Forms
 
 This is an enhanced version based on [lexoyo's serverless-forms](https://github.com/lexoyo/serverless-forms/), offering users a more flexible and powerful serverless form solution.

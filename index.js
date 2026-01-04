@@ -54,7 +54,7 @@ function processFormFieldsIndividual(req, res) {
   const referer = req.headers.referer || '';
   const clientIP = req.socket.remoteAddress;
 
-  if (referer.startsWith('https://ssangyongsports.eu.org')) {
+  if (referer.startsWith('https://sysports.de')) {
     const form = new formidable.IncomingForm();
     form.parse(req, function (err, fields) {
       if (err) {
